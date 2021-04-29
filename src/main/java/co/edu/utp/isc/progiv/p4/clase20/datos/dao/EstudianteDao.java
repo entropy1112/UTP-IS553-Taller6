@@ -87,4 +87,27 @@ public class EstudianteDao {
         }
         return estudiante;
     }
+    
+    public void eliminar(Long id) throws BaseDatosException {
+        var em = emf.createEntityManager();
+        Estudiante estudiante = null;
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            
+            var query = em.createQuery("select e from Estudiante e where e.id = :id", Estudiante.class);
+            query.setParameter("id", id);
+            
+            estudiante = query.getSingleResult();
+            em.remove(estudiante);
+            et.commit();
+        } catch (Exception e) {
+            throw new BaseDatosException(e.getMessage());
+        } finally{
+            em.close();
+        }
+         
+    }
+    
 }

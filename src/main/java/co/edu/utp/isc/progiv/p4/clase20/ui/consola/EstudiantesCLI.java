@@ -33,9 +33,10 @@ public class EstudiantesCLI {
             System.out.println("1. Listado de estudiantes");
             System.out.println("2. Consultar un estudiante por ID");
             System.out.println("3. Agregar un estudiante");
+            System.out.println("4. Eliminar un estudiante por ID");
             System.out.println("0. Salir");
             System.out.println("========================================================");
-            opcion = EntradaTecladoUtils.obtenerOpcion("1,2,3,0".split(","));
+            opcion = EntradaTecladoUtils.obtenerOpcion("1,2,3,4,0".split(","));
             switch (opcion) {
                 case "1":
                     listarEstudiantes();
@@ -45,6 +46,9 @@ public class EstudiantesCLI {
                     break;
                 case "3":
                     agregarEstudiante();
+                    break;
+                case "4":
+                    eliminarEstudiante();
                     break;
             }
         } while (!opcion.equals("0"));
@@ -114,4 +118,29 @@ public class EstudiantesCLI {
         EntradaTecladoUtils.presionaParaContinuar();
     }
 
+    private static void eliminarEstudiante() {
+        System.out.println("\n\n");
+        System.out.println("========================================================");
+        System.out.println(" Eliminar estudiante ");
+        System.out.println("========================================================");
+        String valor;
+        do {
+            valor = EntradaTecladoUtils.obtenerCadena("Ingrese la identificación del estudiante a eliminar: ");
+
+            if (valor == null
+                    || valor.trim().isBlank()
+                    || !valor.matches("[0-9]+")) {
+                System.err.println("Debe ingresar una identificación válida");
+                valor = null;
+            }
+        } while (valor == null);
+
+        var id = Long.valueOf(valor);
+        try {
+            facade.eliminarEstudiante(id);
+        } catch (NoEncontradoException ex) {
+            System.err.println(ex.getMessage());
+        }
+        EntradaTecladoUtils.presionaParaContinuar();
+    }
 }

@@ -10,8 +10,6 @@ import co.edu.utp.isc.progiv.p4.clase20.excepciones.NoEncontradoException;
 import co.edu.utp.isc.progiv.p4.clase20.datos.dao.EstudianteDao;
 import co.edu.utp.isc.progiv.p4.clase20.datos.entidades.Estudiante;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -45,6 +43,15 @@ public class UniversidadFacade {
 
     public Estudiante guardarEstudiante(String nombre, String apellido, String telefono) throws BaseDatosException {
         return estudianteDao.guardar(nombre, apellido, telefono);
+    }
+    
+    public void eliminarEstudiante(Long id) throws NoEncontradoException{
+        try {
+            estudianteDao.eliminar(id);
+            System.out.println("Estudiante eliminado exitosamente");
+        } catch (BaseDatosException ex) {
+            throw new NoEncontradoException("No existe el estudiante con identificacion " + id);
+        }
     }
 
 }
