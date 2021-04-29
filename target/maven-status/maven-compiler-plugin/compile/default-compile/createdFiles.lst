@@ -1,0 +1,9 @@
+co\edu\utp\isc\progiv\p4\clase20\excepciones\NoEncontradoException.class
+co\edu\utp\isc\progiv\p4\clase20\excepciones\BaseDatosException.class
+co\edu\utp\isc\progiv\p4\clase20\ui\consola\EstudiantesCLI.class
+co\edu\utp\isc\progiv\p4\clase20\datos\dao\EstudianteDao.class
+co\edu\utp\isc\progiv\p4\clase20\datos\entidades\Estudiante.class
+co\edu\utp\isc\progiv\p4\clase20\ui\consola\Consola.class
+co\edu\utp\isc\progiv\p4\clase20\ui\consola\utils\EntradaTecladoUtils.class
+co\edu\utp\isc\progiv\p4\clase20\Main.class
+co\edu\utp\isc\progiv\p4\clase20\logica\UniversidadFacade.class
