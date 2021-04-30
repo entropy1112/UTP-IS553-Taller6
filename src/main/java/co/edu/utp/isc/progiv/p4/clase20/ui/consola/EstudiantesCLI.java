@@ -34,9 +34,10 @@ public class EstudiantesCLI {
             System.out.println("2. Consultar un estudiante por ID");
             System.out.println("3. Agregar un estudiante");
             System.out.println("4. Eliminar un estudiante por ID");
+            System.out.println("5. Modificar un estudiante por su ID");
             System.out.println("0. Salir");
             System.out.println("========================================================");
-            opcion = EntradaTecladoUtils.obtenerOpcion("1,2,3,4,0".split(","));
+            opcion = EntradaTecladoUtils.obtenerOpcion("1,2,3,4,5,0".split(","));
             switch (opcion) {
                 case "1":
                     listarEstudiantes();
@@ -49,6 +50,9 @@ public class EstudiantesCLI {
                     break;
                 case "4":
                     eliminarEstudiante();
+                    break;
+                case "5":
+                    modificarEstudiante();
                     break;
             }
         } while (!opcion.equals("0"));
@@ -138,6 +142,37 @@ public class EstudiantesCLI {
         var id = Long.valueOf(valor);
         try {
             facade.eliminarEstudiante(id);
+        } catch (NoEncontradoException ex) {
+            System.err.println(ex.getMessage());
+        }
+        EntradaTecladoUtils.presionaParaContinuar();
+    }
+    
+    private static void modificarEstudiante() {
+        System.out.println("\n\n");
+        System.out.println("========================================================");
+        System.out.println(" Modificar estudiante ");
+        System.out.println("========================================================");
+        String valor;
+        do {
+            valor = EntradaTecladoUtils.obtenerCadena("Ingrese la identificación del estudiante a modificar: ");
+            
+            if (valor == null
+                    || valor.trim().isBlank()
+                    || !valor.matches("[0-9]+")) {
+                System.err.println("Debe ingresar una identificación válida");
+                valor = null;
+            }
+        } while (valor == null);
+        System.out.println("========================================================");
+        System.out.println(" Si no quiere hacer cambios, deje el campo vacio y presione ENTER ");
+        System.out.println("========================================================");
+        String nombres = EntradaTecladoUtils.obtenerCadena("Ingrese el nuevo nombre: ");
+        String apellidos = EntradaTecladoUtils.obtenerCadena("Ingrese los nuevos apellidos: ");
+        String telefono = EntradaTecladoUtils.obtenerCadena("Ingrese el nuevo telefono:");
+        var id = Long.valueOf(valor);
+        try {
+            facade.modificarEstudiante(id, nombres, apellidos, telefono);
         } catch (NoEncontradoException ex) {
             System.err.println(ex.getMessage());
         }

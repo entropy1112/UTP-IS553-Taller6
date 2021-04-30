@@ -45,13 +45,26 @@ public class UniversidadFacade {
         return estudianteDao.guardar(nombre, apellido, telefono);
     }
     
-    public void eliminarEstudiante(Long id) throws NoEncontradoException{
+    public void eliminarEstudiante(Long id) throws NoEncontradoException {
         try {
             estudianteDao.eliminar(id);
             System.out.println("Estudiante eliminado exitosamente");
         } catch (BaseDatosException ex) {
-            throw new NoEncontradoException("No existe el estudiante con identificacion " + id);
+            throw new NoEncontradoException("No existe el estudiante "
+                                            + "con identificacion " + id);
         }
     }
-
+    
+    public void modificarEstudiante(Long id, String nombres, String apellidos,
+                                    String telefono) 
+                                    throws NoEncontradoException {
+        try {
+            estudianteDao.modificar(id, nombres, apellidos, telefono);
+            System.out.println("Estudiante modificado con exito");
+        } catch (BaseDatosException ex) {
+            throw new NoEncontradoException("No existe el estudiante "
+                                            + "con identificacion " + id);
+        }
+    }
+    
 }

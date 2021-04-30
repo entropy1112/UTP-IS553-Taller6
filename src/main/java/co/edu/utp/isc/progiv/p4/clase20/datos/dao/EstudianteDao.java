@@ -88,9 +88,8 @@ public class EstudianteDao {
         return estudiante;
     }
     
-    public void eliminar(Long id) throws BaseDatosException {
+    public void eliminar (Long id) throws BaseDatosException {
         var em = emf.createEntityManager();
-        Estudiante estudiante = null;
         EntityTransaction et = null;
         try {
             et = em.getTransaction();
@@ -99,15 +98,43 @@ public class EstudianteDao {
             var query = em.createQuery("select e from Estudiante e where e.id = :id", Estudiante.class);
             query.setParameter("id", id);
             
-            estudiante = query.getSingleResult();
+            Estudiante estudiante = query.getSingleResult();
             em.remove(estudiante);
             et.commit();
         } catch (Exception e) {
             throw new BaseDatosException(e.getMessage());
-        } finally{
+        } finally {
             em.close();
         }
          
+    }
+    
+    public void modificar (Long id, String nombres, String apellidos, 
+                           String telefono) throws BaseDatosException {
+        var em = emf.createEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Estudiante estudiante = em.find(Estudiante.class,id);
+            
+            if(!"".equals(nombres)){
+                estudiante.setNombres(nombres);
+            }
+            if(!"".equals(apellidos)){
+                estudiante.setApellidos(apellidos);
+            }
+            if(!"".equals(telefono)){
+                estudiante.setTelefono(telefono);
+            }
+            
+            em.merge(estudiante);
+            et.commit();
+        } catch (Exception e) {
+            throw new BaseDatosException(e.getMessage());
+        } finally {
+            em.close();
+        }
     }
     
 }
